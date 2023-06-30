@@ -128,7 +128,7 @@ print()
 start_time = time.time()
 try:
     print("Testing psuedoprimes...")
-    for n in read_integers_from_file("../perrin_mr2_psuedoprimes.txt"):
+    for n in read_integers_from_file("../perrin_mr2_pseudoprimes.txt"):
         run_primality_test(n, False)
         
     print("Testing primes...")
