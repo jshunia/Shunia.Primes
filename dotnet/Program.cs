@@ -8,7 +8,7 @@ Console.WriteLine();
 var sw = Stopwatch.StartNew();
 try
 {
-    // Test all base 2 Miller-Rabin psuedoprimes up to 2^64.
+    // Test all base 2 Miller-Rabin psuedoprimes which are also Perrin pseudoprimes up to 2^64.
     Console.WriteLine($"[{sw.Elapsed}] Testing psuedoprimes...");
     foreach (BigInteger n in ReadIntegersFromFile("../../../../perrin_mr2_psuedoprimes.txt"))
         RunPrimalityTest(n, false);
