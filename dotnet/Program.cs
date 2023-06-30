@@ -8,15 +8,15 @@ Console.WriteLine();
 var sw = Stopwatch.StartNew();
 try
 {
+    // Test all base 2 Miller-Rabin psuedoprimes up to 2^64.
+    Console.WriteLine($"[{sw.Elapsed}] Testing psuedoprimes...");
+    foreach (BigInteger n in ReadIntegersFromFile("../../../../perrin_mr2_psuedoprimes.txt"))
+        RunPrimalityTest(n, false);
+
     // Test all primes up to 10^7.
     Console.WriteLine($"[{sw.Elapsed}] Testing primes...");
     foreach (BigInteger n in ReadIntegersFromFile("../../../../primes.txt"))
         RunPrimalityTest(n, true);
-
-    // Test all base 2 Miller-Rabin psuedoprimes up to 2^64.
-    Console.WriteLine($"[{sw.Elapsed}] Testing psuedoprimes...");
-    foreach (BigInteger n in ReadIntegersFromFile("../../../../mr2_psuedoprimes.txt"))
-        RunPrimalityTest(n, false);
 }
 catch (InvalidOperationException ex)
 {
