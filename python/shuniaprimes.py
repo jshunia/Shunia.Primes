@@ -127,7 +127,7 @@ print("By: Joseph M. Shunia, 2023")
 print()
 start_time = time.time()
 try:
-    print("Testing psuedoprimes...")
+    print("Testing pseudoprimes...")
     for n in read_integers_from_file("../perrin_mr2_pseudoprimes.txt"):
         run_primality_test(n, False)
         
