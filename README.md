@@ -6,7 +6,7 @@ The general idea is that we are testing whether the congruence `1 + a(n) = (1 + 
 ## Conjecture:
 - Let `n` be an odd integer > 3 such that `2^(n-1) = 1 mod n`.
 - Let `r` be the least integer which does not divide `n - 1`.
-- If `2^Floor(n/r) + 1 = sum(k=0, n, binomial(n,k) * 2^Floor(k/r)) mod n` then `n` is prime or `GCD(2^Floor(n/r) - 1, n)` is a non-trivial factor of `n`.
+- If `2^Floor(n/r) + 1 = sum(k=0, n, binomial(n,k) * 2^Floor(k/r)) (mod n)` and `GCD(2^Floor(n/r) - 1, n) = 1`, then `n` is prime.
 
 ## Notes:
 The code in this repository is not optimized. Particularly, it uses naive polynomial multiplication (`O(n^2)` time). With an efficient polynomial multiplication algorithm (`O(n log(n)` time) and other optimizations, the time complexity of this test should be roughly `O(n^3)`. Also, the Python implementation was translated by AI and may not fully support arbitrary integer precision.
