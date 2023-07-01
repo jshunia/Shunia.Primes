@@ -5,7 +5,7 @@ The general idea is that we are testing whether the congruence `1 + a(n) = (1 + 
 
 ## Conjecture:
 - Let `n` be an odd integer > 3 such that `2^(n-1) = 1 (mod n)`.
-- Let `D` be the least integer which does not divide `n - 1`.
+- Let `D` be the least integer which does not divide `n-1`.
 - If `2^Floor(n/D) + 1 = sum(k=0, n, binomial(n,k) * 2^Floor(k/D)) (mod n)` then either `n` is prime or `GCD((2^Floor(n/D) mod n) - 1, n)` is a non-trivial factor of `n`.
 
 ## Notes:
