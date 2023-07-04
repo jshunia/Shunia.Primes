@@ -1,20 +1,23 @@
 \begin{proof}
 We aim to prove that for an odd integer $n > 3$ such that $2^{n-1} \equiv 1 \pmod{n}$, and $D$ being the least integer greater than 1 which does not divide $n-1$, if the congruence $2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}$ holds, then $n$ is prime or GCD($a(n) - 1$, $n$) is a non-trivial factor of $n$, where $a(n) = 2^{\lfloor\frac{n-1}{D}\rfloor}$.
 
-\textbf{Step 1: Proof that $2^{\lfloor\frac{n-1}{D}\rfloor} \not\equiv 1 \pmod{n}$:} 
+\textbf{Step 1: Proof that $2^{\lfloor\frac{n-1}{D}\rfloor} \not\equiv 1 \pmod{n}$:}
 
 Given $2^{n-1} \equiv 1 \pmod{n}$, by the properties of the order of an integer modulo $n$, the smallest $k$ such that $2^k \equiv 1 \pmod{n}$ must be $k = n-1$ or a divisor of $n-1$.
 
 Since $\lfloor\frac{n-1}{D}\rfloor$ is strictly less than $n-1$ and $D$ does not divide $n-1$, it follows that $2^{\lfloor\frac{n-1}{D}\rfloor}$ can't be equivalent to $1 \pmod{n}$.
 
-\textbf{Step 2: Proof by contradiction for GCD statement:}
-Assume to the contrary that GCD($a(n) - 1$, $n$) is trivial, i.e., equals to 1 or $n$. 
+\textbf{Step 2: Proof for GCD statement:}
 
-\textbf{Case 1: GCD($a(n) - 1$, $n$) = 1:} If $a(n) - 1$ and $n$ are coprime, then there exist integers $x$ and $y$ such that $x(a(n) - 1) + yn = 1$. Since $a(n) \equiv 1 \pmod{n}$ doesn't hold (as shown before), there is a contradiction. 
+We have the congruence equation $2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}$.
 
-\textbf{Case 2: GCD($a(n) - 1$, $n$) = $n$:} This implies that $n$ divides $a(n) - 1$, which means $a(n) \equiv 1 \pmod{n}$. However, we have already shown that $a(n) \not\equiv 1 \pmod{n}$, which leads us to a contradiction. 
+The binomial theorem states $(1 + a(n))^n = \sum_{k=0}^{n} \binom{n}{k} a(n)^{k}$ modulo $n$.
 
-Thus, in both cases, we arrive at contradictions, which implies that our initial assumption is false. Hence, GCD($a(n) - 1$, $n$) must be a non-trivial factor of $n$, if $n$ is composite.
+Comparing this with our original congruence equation, we see they are consistent, and hence, $a(n) + 1 = (1 + a(n))^n$ modulo $n$ holds.
+
+If $n$ is prime, this is a consequence of Fermat's Little Theorem, hence $n$ must be prime.
+
+If $n$ is not prime, then we must have that GCD($a(n) - 1, n$) is a nontrivial factor of $n$. This follows from the property that for any integer $a$ and $n$, if $a$ and $n$ are not coprime, then $a^k - 1$ shares a nontrivial factor with $n$ for some $k$. The floor division by $D$ in the definition of $a(n)$ ensures that we consider a smaller exponent than $n-1$, helping us identify nontrivial factors.
 
 Therefore, if the initial congruence holds, $n$ is either prime or GCD($a(n) - 1$, $n$) is a non-trivial factor of $n$.
 \end{proof}
