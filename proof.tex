@@ -1,6 +1,23 @@
-\begin{proof}
-We aim to prove that for an odd integer $n > 3$ such that $2^{n-1} \equiv 1 \pmod{n}$, and $D$ being the least integer greater than 1 which does not divide $n-1$, if the congruence $2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}$ holds, then $n$ is prime or GCD($a(n) - 1$, $n$) is a non-trivial factor of $n$, where $a(n) = 2^{\lfloor\frac{n-1}{D}\rfloor}$.
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[utf8]{inputenc}
+\title{Primality Test Proof}
+\author{Joseph M. Shunia}
+\date{July 3, 2023}
+\begin{document}
+\maketitle
 
+\textbf{Theorem}
+\begin{theorem}
+Let $n > 3$ be an odd integer such that $2^{n-1} \equiv 1 \pmod{n}$, and let $D$ be the least integer greater than 1 which does not divide $n-1$. If the congruence
+\[
+2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}
+\]
+holds, then $n$ is prime or $\gcd(a(n) - 1, n)$ is a non-trivial factor of $n$, where $a(n) = 2^{\lfloor\frac{n-1}{D}\rfloor}$.
+\end{theorem}
+
+\begin{proof}
 \textbf{Step 1: Proof that $2^{\lfloor\frac{n-1}{D}\rfloor} \not\equiv 1 \pmod{n}$:}
 
 Given $2^{n-1} \equiv 1 \pmod{n}$, by the properties of the order of an integer modulo $n$, the smallest $k$ such that $2^k \equiv 1 \pmod{n}$ must be $k = n-1$ or a divisor of $n-1$.
@@ -47,3 +64,5 @@ Hence, $\gcd(a(n)^2 - a(n), n)$ is a non-trivial factor of $n$.
 
 Therefore, in either case, we have shown that if the congruence holds, then $n$ is prime or $\gcd(a(n) - 1, n)$ is a non-trivial factor of $n$.
 \end{proof}
+
+\end{document}
