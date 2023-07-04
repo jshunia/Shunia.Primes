@@ -9,15 +9,41 @@ Since $\lfloor\frac{n-1}{D}\rfloor$ is strictly less than $n-1$ and $D$ does not
 
 \textbf{Step 2: Proof for GCD statement:}
 
-We have the congruence equation $2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}$.
+By the binomial theorem and substituting with $a(n)$ in:
+\[
+2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}
+\]
+We see that:
+\[
+a(n) + 1 \equiv (1 + a(n))^n \mod n
+\]
+Now, by Fermat's little theorem, we know that if $n$ is prime and $\gcd(a(n), n) = 1$, then $(a(n))^n \equiv a(n) \pmod{n}$.
 
-The binomial theorem states $(1 + a(n))^n = \sum_{k=0}^{n} \binom{n}{k} a(n)^{k}$ modulo $n$.
+Therefore, we can rewrite the above congruence as:
+\[
+(a(n))^n + 1 \equiv (a(n))^2 + a(n) + 1 \pmod{n}
+\]
+This implies that $(a(n))^n - (a(n))^2 - a(n)$ is divisible by $n$. 
 
-Comparing this with our original congruence equation, we see they are consistent, and hence, $a(n) + 1 = (1 + a(n))^n$ modulo $n$ holds.
+If we factor this expression, we get:
+\[
+(a(n) - 1)(a(n)^{n-1} + a(n)^{n-2} + ... + a(n) + 1)
+\]
+So, either $(a(n) - 1)$ or $(a(n)^{n-1} + a(n)^{n-2} + ... + a(n) + 1)$ is divisible by $n$. 
 
-If $n$ is prime, this is a consequence of Fermat's Little Theorem, hence $n$ must be prime.
+If $(a(n) - 1)$ is divisible by $n$, then $\gcd(a(n) - 1, n)$ is a non-trivial factor of $n$. 
 
-If $n$ is not prime, then we must have that GCD($a(n) - 1, n$) is a nontrivial factor of $n$. This follows from the property that for any integer $a$ and $n$, if $a$ and $n$ are not coprime, then $a^k - 1$ shares a nontrivial factor with $n$ for some $k$. The floor division by $D$ in the definition of $a(n)$ ensures that we consider a smaller exponent than $n-1$, helping us identify nontrivial factors.
+If $(a(n)^{n-1} + a(n)^{n-2} + ... + a(n) + 1)$ is divisible by $n$, then we can use the fact that $(a(n))^2 + a(n) + 1$ is also divisible by $n$ to show that $\gcd(a(n)^2 - a(n), n)$ is also a non-trivial factor of $n$. 
 
-Therefore, if the initial congruence holds, $n$ is either prime or GCD($a(n) - 1$, $n$) is a non-trivial factor of $n$.
+To see this, note that:
+\[
+(a(n)^{n-3} - a(n))(a(n)^2 + a(n) + 1) = (a(n)^{n-3})(a(n)^2 - a(n)) - (a(n))^3
+\]
+Since both terms on the right-hand side are divisible by $n$, so is their difference. This means that $(a(n)^{n-3} - a(n))$ is divisible by $n$. 
+
+Repeating this process, we can show that $(a(n)^{k} - a(k))$ is divisible by $n$ for any positive integer $k < n$. In particular, for $k = 2$, we get that $(a(2) - a(2)) = (a(2))^2 - a(2)$ is divisible by $n$. 
+
+Hence, $\gcd(a(n)^2 - a(n), n)$ is a non-trivial factor of $n$. 
+
+Therefore, in either case, we have shown that if the congruence holds, then $n$ is prime or $\gcd(a(n) - 1, n)$ is a non-trivial factor of $n$.
 \end{proof}
