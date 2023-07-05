@@ -10,7 +10,7 @@ The general idea is that we are testing whether the congruence `1 + a(n) = (1 + 
 
 ## Conjecture 2:
 - Let `n` be an odd integer > 3 and `D` be the least integer `> 0` which does not divide `n-1`.
-- If `2^Floor((n-1)/D) + 1 = (1 + 2^Floor((n-1)/D))^(n) = sum(k=0, n, binomial(n,k) * 2^Floor(k/D)) (mod n)` then either `n` is prime or `GCD((2^Floor((n-1)/D) mod n) - 1, n)` is a non-trivial factor of `n`.
+- If `2^Floor((n-1)/D) + 1 = (2^Floor((n-1)/D) + 1)^(n) = sum(k=0, n, binomial(n,k) * 2^Floor(k/D)) (mod n)` then either `n` is prime or `GCD((2^Floor((n-1)/D) mod n) - 1, n)` is a non-trivial factor of `n`.
 
 ## Notes:
 The code in this repository is not optimized. Particularly, it uses naive polynomial multiplication (`O(n^2)` time). With an efficient polynomial multiplication algorithm (`O(n log(n))` time) and other optimizations, the time complexity of this test should be roughly `O(n^3)`. Also, the Python implementation was translated by AI and may not fully support arbitrary integer precision.
