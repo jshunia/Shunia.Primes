@@ -4,65 +4,50 @@
 \usepackage[utf8]{inputenc}
 \title{Primality Test Proof}
 \author{Joseph M. Shunia}
-\date{July 3, 2023}
+\date{July 5, 2023}
 \begin{document}
 \maketitle
-
-\textbf{Theorem}
+\newtheorem{theorem}{Theorem}
 \begin{theorem}
-Let $n > 3$ be an odd integer such that $2^{n-1} \equiv 1 \pmod{n}$, and let $D$ be the least integer greater than 1 which does not divide $n-1$. If the congruence
-\[
-2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}
-\]
-holds, then $n$ is prime or $\gcd(a(n) - 1, n)$ is a non-trivial factor of $n$, where $a(n) = 2^{\lfloor\frac{n-1}{D}\rfloor}$.
+Let $n$ be an odd integer $>3$ such that $2^{n-1} \equiv 1 \pmod{n}$.
+Let $D$ be the least integer $>2$ which does not divide $n-1$.
+If $2^{\left\lfloor (n-1)/D \right\rfloor} + 1 \equiv (2^{\left\lfloor (n-1)/D \right\rfloor} + 1)^{n} \equiv \sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor k/D \right\rfloor} \pmod{n}$, then $n$ is prime.
 \end{theorem}
-
 \begin{proof}
 \textbf{Step 1: Proof that $2^{\lfloor\frac{n-1}{D}\rfloor} \not\equiv 1 \pmod{n}$:}
-
 Given $2^{n-1} \equiv 1 \pmod{n}$, by the properties of the order of an integer modulo $n$, the smallest $k$ such that $2^k \equiv 1 \pmod{n}$ must be $k = n-1$ or a divisor of $n-1$.
-
 Since $\lfloor\frac{n-1}{D}\rfloor$ is strictly less than $n-1$ and $D$ does not divide $n-1$, it follows that $2^{\lfloor\frac{n-1}{D}\rfloor}$ can't be equivalent to $1 \pmod{n}$.
 
-\textbf{Step 2: Proof for GCD statement:}
+\textbf{Step 2: Proof that the congruence holds for $n$ being prime:}
 
-By the binomial theorem and substituting with $a(n)$ in:
-\[
-2^{\lfloor\frac{n-1}{D}\rfloor} + 1 = \sum_{k=0}^{n}\binom{n}{k}2^{\lfloor\frac{k}{D}\rfloor} \pmod{n}
-\]
-We see that:
-\[
-a(n) + 1 \equiv (1 + a(n))^n \mod n
-\]
-Now, by Fermat's little theorem, we know that if $n$ is prime and $\gcd(a(n), n) = 1$, then $(a(n))^n \equiv a(n) \pmod{n}$.
+Suppose $n$ is prime. The Binomial Theorem gives us
 
-Therefore, we can rewrite the above congruence as:
-\[
-(a(n))^n + 1 \equiv (a(n))^2 + a(n) + 1 \pmod{n}
-\]
-This implies that $(a(n))^n - (a(n))^2 - a(n)$ is divisible by $n$. 
+$$(2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1)^n = \sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor k/D \right\rfloor}
 
-If we factor this expression, we get:
-\[
-(a(n) - 1)(a(n)^{n-1} + a(n)^{n-2} + ... + a(n) + 1)
-\]
-So, either $(a(n) - 1)$ or $(a(n)^{n-1} + a(n)^{n-2} + ... + a(n) + 1)$ is divisible by $n$. 
+When we consider the terms of this sum modulo $n$, we can use the fact that for prime $p$ and $1\le k < p$, $\binom{p}{k} \equiv 0 \pmod{p}$ (from Lucas's Theorem) to conclude that all the terms where $1\le k < n$ disappear. 
 
-If $(a(n) - 1)$ is divisible by $n$, then $\gcd(a(n) - 1, n)$ is a non-trivial factor of $n$. 
+We are then left with:
 
-If $(a(n)^{n-1} + a(n)^{n-2} + ... + a(n) + 1)$ is divisible by $n$, then we can use the fact that $(a(n))^2 + a(n) + 1$ is also divisible by $n$ to show that $\gcd(a(n)^2 - a(n), n)$ is also a non-trivial factor of $n$. 
+$$(2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1)^n \equiv \binom{n}{0} + \binom{n}{n}2^{\left\lfloor n/D \right\rfloor} \pmod{n}$$
 
-To see this, note that:
-\[
-(a(n)^{n-3} - a(n))(a(n)^2 + a(n) + 1) = (a(n)^{n-3})(a(n)^2 - a(n)) - (a(n))^3
-\]
-Since both terms on the right-hand side are divisible by $n$, so is their difference. This means that $(a(n)^{n-3} - a(n))$ is divisible by $n$. 
+But we know $\binom{n}{0} = \binom{n}{n} = 1$, which reduces the above congruence to
 
-Repeating this process, we can show that $(a(n)^{k} - a(k))$ is divisible by $n$ for any positive integer $k < n$. In particular, for $k = 2$, we get that $(a(2) - a(2)) = (a(2))^2 - a(2)$ is divisible by $n$. 
+$$2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1 \equiv (2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1)^n \pmod{n}$$
 
-Hence, $\gcd(a(n)^2 - a(n), n)$ is a non-trivial factor of $n$. 
+This congruence matches with the condition given in the theorem, thus the condition holds if $n$ is prime.
 
-Therefore, in either case, we have shown that if the congruence holds, then $n$ is prime or $\gcd(a(n) - 1, n)$ is a non-trivial factor of $n$.
+\textbf{Step 3: Proof that the congruence does not hold for $n$ being composite:}
+
+Suppose $n$ is not prime, and let $p$ be a prime divisor of $n$. 
+
+Let $m = \left\lfloor \frac{n-1}{D} \right\rfloor$. Since $n$ is not a prime, $1 < m < n-1$. From Step 1, we have $2^m \not\equiv 1 \pmod{n}$.
+
+Consider the congruence:
+
+$$\sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor k/D \right\rfloor} \equiv (2^m + 1)^n \pmod{n}$$
+
+If we examine the terms of the sum for $k=p$, we get $\binom{n}{p}2^{\left\lfloor p/D \right\rfloor}$. Since $p$ is a divisor of $n$, this term is not equivalent to zero modulo $n$. Therefore, the sum on the left side of the congruence is not equivalent to $(2^m + 1)^n \pmod{n}$, contradicting the assumption that $n$ satisfies the given congruence condition.
+
+Hence, if $n$ is not prime, it does not satisfy the given congruence. This completes the proof.
 \end{proof}
-
 \end{document}
