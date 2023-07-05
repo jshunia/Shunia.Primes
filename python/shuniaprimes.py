@@ -23,6 +23,10 @@ def is_prime_shunia(n):
 
     v0 = pow(2, n1 // d, n)
     v1_expected = mod_wrap(v0 + 1, n)
+    v0a = pow(v0 + 1, n, n);
+    if v0a != v1_expected:
+        return False
+        
     gcd = math.gcd(n, v0 - 1)
     if gcd != 1 and gcd != n:
         return False

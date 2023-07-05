@@ -57,6 +57,10 @@ static bool IsPrimeShunia(BigInteger n)
 
     BigInteger v0 = Pow(2, n1 / d, n);
     BigInteger v1Expected = ModWrap(v0 + 1, n);
+    BigInteger v0a = Pow(v0 + 1, n, n);
+    if (v0a != v1Expected)
+        return false;
+
     var gcd = BigInteger.GreatestCommonDivisor(n, v0 - 1);
     if (gcd != 1 && gcd != n)
         return false;
