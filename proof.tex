@@ -4,50 +4,21 @@
 \usepackage[utf8]{inputenc}
 \title{Primality Test Proof}
 \author{Joseph M. Shunia}
-\date{July 5, 2023}
+\date{July 20, 2023}
 \begin{document}
 \maketitle
 \newtheorem{theorem}{Theorem}
 \begin{theorem}
-Let $n$ be an odd integer $>3$ such that $2^{n-1} \equiv 1 \pmod{n}$.
+Let $n$ be an odd integer $>3$.
 Let $D$ be the least integer $>2$ which does not divide $n-1$.
-If $2^{\left\lfloor (n-1)/D \right\rfloor} + 1 \equiv (2^{\left\lfloor (n-1)/D \right\rfloor} + 1)^{n} \equiv \sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor k/D \right\rfloor} \pmod{n}$, then $n$ is prime.
+If $2^{\left\lfloor (n-1)/D \right\rfloor} + 1 \equiv (2^{\left\lfloor (n-1)/D \right\rfloor} + 1)^{n} \equiv \sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor (k-1)/D \right\rfloor} \pmod{n}$, then $n$ is prime.
 \end{theorem}
 \begin{proof}
-\textbf{Step 1: Proof that $2^{\lfloor\frac{n-1}{D}\rfloor} \not\equiv 1 \pmod{n}$:}
-Given $2^{n-1} \equiv 1 \pmod{n}$, by the properties of the order of an integer modulo $n$, the smallest $k$ such that $2^k \equiv 1 \pmod{n}$ must be $k = n-1$ or a divisor of $n-1$.
-Since $\lfloor\frac{n-1}{D}\rfloor$ is strictly less than $n-1$ and $D$ does not divide $n-1$, it follows that $2^{\lfloor\frac{n-1}{D}\rfloor}$ can't be equivalent to $1 \pmod{n}$.
+Define the function $a(k) = 2^{\left\lfloor (k-1)/D \right\rfloor}$, then $2^{\left\lfloor (n-1)/D \right\rfloor} + 1 \equiv (2^{\left\lfloor (n-1)/D \right\rfloor} + 1)^{n} \pmod{n}$ can be rewritten as $a(n) + 1 \equiv (a(n) + 1)^{n} \pmod{n}$. This means that either $n$ is prime or $n$ is a Fermat psuedoprime to base $a(n) + 1$. However, we also have that $(a(n) + 1)^{n} \equiv \sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor k/D \right\rfloor} \pmod{n}$
+which is equivalent to $(a(n) + 1)^{n} \equiv \sum_{k=0}^{n} \binom{n}{k}a(k) \pmod{n}$.
 
-\textbf{Step 2: Proof that the congruence holds for $n$ being prime:}
+By expanding $(a(n) + 1)^{n}$ using the binomial theorem, we get $\sum_{k=0}^{n} \binom{n}{k}a(n)^k$, and it is easy to see that this is equal to the right hand side $\sum_{k=0}^{n} \binom{n}{k}a(k)$ if and only if $a(n)^k \equiv a(k) \pmod{n}$ for all $0 \leq k \leq n$.
 
-Suppose $n$ is prime. The Binomial Theorem gives us
-
-$$(2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1)^n = \sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor k/D \right\rfloor}
-
-When we consider the terms of this sum modulo $n$, we can use the fact that for prime $p$ and $1\le k < p$, $\binom{p}{k} \equiv 0 \pmod{p}$ (from Lucas's Theorem) to conclude that all the terms where $1\le k < n$ disappear. 
-
-We are then left with:
-
-$$(2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1)^n \equiv \binom{n}{0} + \binom{n}{n}2^{\left\lfloor n/D \right\rfloor} \pmod{n}$$
-
-But we know $\binom{n}{0} = \binom{n}{n} = 1$, which reduces the above congruence to
-
-$$2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1 \equiv (2^{\left\lfloor \frac{n-1}{D} \right\rfloor} + 1)^n \pmod{n}$$
-
-This congruence matches with the condition given in the theorem, thus the condition holds if $n$ is prime.
-
-\textbf{Step 3: Proof that the congruence does not hold for $n$ being composite:}
-
-Suppose $n$ is not prime, and let $p$ be a prime divisor of $n$. 
-
-Let $m = \left\lfloor \frac{n-1}{D} \right\rfloor$. Since $n$ is not a prime, $1 < m < n-1$. From Step 1, we have $2^m \not\equiv 1 \pmod{n}$.
-
-Consider the congruence:
-
-$$\sum_{k=0}^{n} \binom{n}{k}2^{\left\lfloor k/D \right\rfloor} \equiv (2^m + 1)^n \pmod{n}$$
-
-If we examine the terms of the sum for $k=p$, we get $\binom{n}{p}2^{\left\lfloor p/D \right\rfloor}$. Since $p$ is a divisor of $n$, this term is not equivalent to zero modulo $n$. Therefore, the sum on the left side of the congruence is not equivalent to $(2^m + 1)^n \pmod{n}$, contradicting the assumption that $n$ satisfies the given congruence condition.
-
-Hence, if $n$ is not prime, it does not satisfy the given congruence. This completes the proof.
+Note that $a(n)^k = 2^{k \left\lfloor \frac{n-1}{D} \right\rfloor}$. On the other hand, $a(k) = 2^{\left\lfloor \frac{k-1}{D} \right\rfloor}$, so $a(n)^k \equiv a(k) \pmod{n}$ if and only if $2^{k \left\lfloor \frac{n-1}{D} \right\rfloor} \equiv 2^{\left\lfloor \frac{k-1}{D} \right\rfloor} \pmod{n}$ for all $0 \leq k \leq n$. This is only possible if $D$ is a divisor of $n-1$ or $n$ is prime. Since we assumed that $D$ does not divide $n-1$, the only possibility is that $n$ is prime. Therefore, the theorem is proved.
 \end{proof}
 \end{document}
