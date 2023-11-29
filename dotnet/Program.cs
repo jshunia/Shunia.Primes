@@ -1,22 +1,36 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 
-const bool ENABLE_LOG_ALL_RESULTS = true;
+const bool ENABLE_LOG_ALL_RESULTS = false;
+const bool ENABLE_FILE_TESTS = false;
+
 Console.WriteLine("SHUNIA PRIMALITY TEST");
 Console.WriteLine("By: Joseph M. Shunia, 2023");
 Console.WriteLine();
 var sw = Stopwatch.StartNew();
 try
 {
-    // Test all base 2 Miller-Rabin pseudoprimes which are also Perrin pseudoprimes up to 2^64.
-    Console.WriteLine($"[{sw.Elapsed}] Testing pseudoprimes ...");
-    foreach (BigInteger n in ReadIntegersFromFile("../../../../perrin_mr2_pseudoprimes.txt"))
-        RunPrimalityTest(n, false);
+    if (ENABLE_FILE_TESTS)
+    {
+        // Test all base 2 Miller-Rabin pseudoprimes which are also Perrin pseudoprimes up to 2^64.
+        Console.WriteLine($"[{sw.Elapsed}] Testing pseudoprimes ...");
+        foreach (BigInteger n in ReadIntegersFromFile("../../../../perrin_mr2_pseudoprimes.txt"))
+            RunPrimalityTest(n, false);
+
+        // Test all primes up to 10^7.
+        Console.WriteLine($"[{sw.Elapsed}] Testing primes...");
+        foreach (BigInteger n in ReadIntegersFromFile("../../../../primes.txt"))
+            RunPrimalityTest(n, true);
+    }
 
     // Test all primes up to 10^7.
-    Console.WriteLine($"[{sw.Elapsed}] Testing primes...");
-    foreach (BigInteger n in ReadIntegersFromFile("../../../../primes.txt"))
-        RunPrimalityTest(n, true);
+    Console.WriteLine($"[{sw.Elapsed}] Testing composites...");
+    BigInteger limit = BigInteger.Pow(2, 32);
+    for (BigInteger n = 3; n < limit; n+=2)
+    {
+        bool expected = IsPrimeExpected(n);
+        RunPrimalityTest(n, expected);
+    }
 }
 catch (InvalidOperationException ex)
 {
@@ -42,9 +56,8 @@ static bool IsPrimeShunia(BigInteger n)
     if (n > 1 && n <= 7) return true;
 
     BigInteger n1 = n - 1;
-    BigInteger fermat = Pow(2, n1, n);
-    if (fermat != 1)
-        return false;
+    //BigInteger fermat = Pow(2, n1, n);
+    //if (fermat != 1) return false;
 
     BigInteger d = 2;
     BigInteger ilimit = BigInteger.Max(Log2(n), 3);
@@ -206,4 +219,52 @@ static IEnumerable<BigInteger> ReadIntegersFromFile(string filePath, BigInteger 
         yield return BigInteger.Parse(line);
         i++;
     }
+}
+
+static bool IsPrimeMr(BigInteger n, BigInteger b)
+{
+    if (n < 2) return false;
+    BigInteger n1 = n - 1;
+
+    BigInteger d = n1, s = 1;
+    while (d > 0 && d % 2 == 0)
+    {
+        d /= 2;
+        s++;
+    }
+    if (d == 0) return true;
+
+    BigInteger mp = BigInteger.ModPow(b, BigInteger.Abs(d), n);
+    if (mp == 1 || mp == n1) return true;
+    for (BigInteger j = 0; j < s; j++)
+    {
+        mp = (mp * mp) % n;
+        if (mp == 1) return false;
+        if (mp == n1) break;
+    }
+
+    return mp == n1;
+}
+
+static bool IsPrimeExpected(BigInteger n)
+{
+    if (n < 2) return false;
+    if (n % 2 == 0) return n == 2;
+    if (n % 3 == 0) return n == 3;
+    if (n % 5 == 0) return n == 5;
+    if (n % 7 == 0) return n == 7;
+    if (n % 11 == 0) return n == 11;
+    if (n % 13 == 0) return n == 13;
+    if (n % 17 == 0) return n == 17;
+    if (n % 19 == 0) return n == 19;
+
+    BigInteger log2 = n.GetBitLength() + 1;
+    BigInteger limit = log2 * 2;
+    for (BigInteger b = 2; b <= limit; b++)
+    {
+        if (!IsPrimeMr(n, b))
+            return false;
+    }
+
+    return true;
 }
