@@ -5,7 +5,7 @@ const bool ENABLE_LOG_ALL_RESULTS = false;
 const bool ENABLE_FILE_TESTS = true;
 const bool ENABLE_RUNTIME_TESTS = true;
 
-Console.WriteLine("SHUNIA PRIMALITY TEST");
+Console.WriteLine("PRIMALITY TEST");
 Console.WriteLine("By: Joseph M. Shunia, 2023");
 Console.WriteLine();
 var sw = Stopwatch.StartNew();
