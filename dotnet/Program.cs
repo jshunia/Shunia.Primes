@@ -2,7 +2,8 @@
 using System.Numerics;
 
 const bool ENABLE_LOG_ALL_RESULTS = false;
-const bool ENABLE_FILE_TESTS = false;
+const bool ENABLE_FILE_TESTS = true;
+const bool ENABLE_RUNTIME_TESTS = true;
 
 Console.WriteLine("SHUNIA PRIMALITY TEST");
 Console.WriteLine("By: Joseph M. Shunia, 2023");
@@ -23,13 +24,16 @@ try
             RunPrimalityTest(n, true);
     }
 
-    // Test all primes up to 10^7.
-    Console.WriteLine($"[{sw.Elapsed}] Testing composites...");
-    BigInteger limit = BigInteger.Pow(2, 32);
-    for (BigInteger n = 3; n < limit; n+=2)
+    if (ENABLE_RUNTIME_TESTS)
     {
-        bool expected = IsPrimeExpected(n);
-        RunPrimalityTest(n, expected);
+        // Test all odd n > 3 up to 2^32.
+        Console.WriteLine($"[{sw.Elapsed}] Testing odd composites...");
+        BigInteger limit = BigInteger.Pow(2, 32);
+        for (BigInteger n = 5; n < limit; n += 2)
+        {
+            bool expected = IsPrimeExpected(n);
+            RunPrimalityTest(n, expected);
+        }
     }
 }
 catch (InvalidOperationException ex)
@@ -53,11 +57,12 @@ void RunPrimalityTest(BigInteger n, bool isPrime)
 static bool IsPrimeShunia(BigInteger n)
 {
     if (n % 2 == 0) return n == 2;
-    if (n > 1 && n <= 7) return true;
+    if (n == 3) return true;
 
     BigInteger n1 = n - 1;
-    //BigInteger fermat = Pow(2, n1, n);
-    //if (fermat != 1) return false;
+    BigInteger fermat = Pow(2, n1, n);
+    if (fermat != 1)
+        return false;
 
     BigInteger d = 2;
     BigInteger ilimit = BigInteger.Max(Log2(n), 3);
@@ -72,10 +77,6 @@ static bool IsPrimeShunia(BigInteger n)
     BigInteger v1Expected = ModWrap(v0 + 1, n);
     BigInteger v0a = Pow(v0 + 1, n, n);
     if (v0a != v1Expected)
-        return false;
-
-    var gcd = BigInteger.GreatestCommonDivisor(n, v0 - 1);
-    if (gcd != 1 && gcd != n)
         return false;
 
     var q = new BigInteger[] { 2 };
@@ -221,6 +222,31 @@ static IEnumerable<BigInteger> ReadIntegersFromFile(string filePath, BigInteger 
     }
 }
 
+static bool IsPrimeExpected(BigInteger n)
+{
+    if (n < 2) return false;
+    if (n % 2 == 0) return n == 2;
+    if (n % 3 == 0) return n == 3;
+    if (n % 5 == 0) return n == 5;
+    if (n % 7 == 0) return n == 7;
+    if (n % 11 == 0) return n == 11;
+    if (n % 13 == 0) return n == 13;
+    if (n % 17 == 0) return n == 17;
+    if (n % 19 == 0) return n == 19;
+
+    // We perform 4 log(2,n) Miller-Rabin tests to check primality.
+    // This is NOT deterministic, but it is highly unlikely for composite to pass.
+    BigInteger log2 = n.GetBitLength() + 1;
+    BigInteger limit = log2 * 4;
+    for (BigInteger b = 2; b <= limit; b++)
+    {
+        if (!IsPrimeMr(n, b))
+            return false;
+    }
+
+    return true;
+}
+
 static bool IsPrimeMr(BigInteger n, BigInteger b)
 {
     if (n < 2) return false;
@@ -244,27 +270,4 @@ static bool IsPrimeMr(BigInteger n, BigInteger b)
     }
 
     return mp == n1;
-}
-
-static bool IsPrimeExpected(BigInteger n)
-{
-    if (n < 2) return false;
-    if (n % 2 == 0) return n == 2;
-    if (n % 3 == 0) return n == 3;
-    if (n % 5 == 0) return n == 5;
-    if (n % 7 == 0) return n == 7;
-    if (n % 11 == 0) return n == 11;
-    if (n % 13 == 0) return n == 13;
-    if (n % 17 == 0) return n == 17;
-    if (n % 19 == 0) return n == 19;
-
-    BigInteger log2 = n.GetBitLength() + 1;
-    BigInteger limit = log2 * 2;
-    for (BigInteger b = 2; b <= limit; b++)
-    {
-        if (!IsPrimeMr(n, b))
-            return false;
-    }
-
-    return true;
 }
