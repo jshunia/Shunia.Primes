@@ -26,10 +26,6 @@ def is_prime_shunia(n):
     v0a = pow(v0 + 1, n, n);
     if v0a != v1_expected:
         return False
-        
-    gcd = math.gcd(n, v0 - 1)
-    if gcd != 1 and gcd != n:
-        return False
 
     q = [2]
     a = [1, 1]
@@ -126,7 +122,7 @@ def run_primality_test(n, is_prime):
 
 ENABLE_LOG_ALL_RESULTS = True
 
-print("SHUNIA PRIMALITY TEST")
+print("PRIMALITY TEST")
 print("By: Joseph M. Shunia, 2023")
 print()
 start_time = time.time()
