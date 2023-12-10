@@ -20,7 +20,10 @@ def is_prime_shunia(n):
         d = i
         m1 = n1 % d
         if m1 != 0: break
-
+        
+    for i in range(3, d+2):
+        if (n % i) == 0: return False
+        
     v0 = pow(2, n1 // d, n)
     v1_expected = mod_wrap(v0 + 1, n)
     v0a = pow(v0 + 1, n, n);
