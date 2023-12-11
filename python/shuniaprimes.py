@@ -8,21 +8,21 @@ from gmpy2 import mpz
 def is_prime_shunia(n):
     if n % 2 == 0: return n == 2
     if n > 1 and n <= 7: return True
-
+    
     n1 = n - 1
-    fermat = pow(2, n1, n)
-    if fermat != 1:
-        return False
-
     d = 2
     ilimit = max(int(gmpy2.log2(n)), 3)
     for i in range(3, ilimit+1):
         d = i
         m1 = n1 % d
         if m1 != 0: break
+    
+    if (n % d == 0):
+        return False
         
-    for i in range(3, d+2):
-        if (n % i) == 0: return False
+    fermat = pow(2, n1, n)
+    if fermat != 1:
+        return False
         
     v0 = pow(2, n1 // d, n)
     v1_expected = mod_wrap(v0 + 1, n)

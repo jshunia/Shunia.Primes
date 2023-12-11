@@ -60,10 +60,6 @@ static bool IsPrimeShunia(BigInteger n)
     if (n == 3) return true;
 
     BigInteger n1 = n - 1;
-    BigInteger fermat = Pow(2, n1, n);
-    if (fermat != 1)
-        return false;
-
     BigInteger d = 2;
     BigInteger ilimit = BigInteger.Max(Log2(n), 3);
     for (BigInteger i = 3; i <= ilimit; i++)
@@ -72,13 +68,14 @@ static bool IsPrimeShunia(BigInteger n)
         BigInteger m1 = n1 % d;
         if (m1 != 0) break;
     }
-    
-    BigInteger d1 = d+1;
-    for (BigInteger i = 3; i <= d1; i++)
-    {
-        if ((n % i) == 0) return false;
-    }
-    
+
+    if (n % d == 0)
+        return false;
+
+    BigInteger fermat = Pow(2, n1, n);
+    if (fermat != 1)
+        return false;
+
     BigInteger v0 = Pow(2, n1 / d, n);
     BigInteger v1Expected = ModWrap(v0 + 1, n);
     BigInteger v0a = Pow(v0 + 1, n, n);
