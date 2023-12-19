@@ -5,9 +5,11 @@ import os
 import gmpy2
 from gmpy2 import mpz
 
+ENABLE_LOG_ALL_RESULTS = True
+
 def is_prime_shunia(n):
     if n % 2 == 0: return n == 2
-    if n > 1 and n <= 7: return True
+    if n == 3: return True
     
     n1 = n - 1
     d = 2
@@ -16,27 +18,27 @@ def is_prime_shunia(n):
         d = i
         m1 = n1 % d
         if m1 != 0: break
-    
-    if (n % d == 0):
-        return False
-        
+
+    ndm = n % d
     fermat = pow(2, n1, n)
     if fermat != 1:
         return False
         
     v0 = pow(2, n1 // d, n)
-    v1_expected = mod_wrap(v0 + 1, n)
-    v0a = pow(v0 + 1, n, n);
-    if v0a != v1_expected:
-        return False
-
     q = [2]
     a = [1, 1]
     pd = d - 1
     p1 = poly_pow(a, n, n, pd, q)
-    v1 = mod_wrap(poly_eval(p1, 1, n), n)
-    if v1 != v1_expected:
+    if p1[0] != 1:
         return False
+        
+    for i in range(1, len(p1), 1):
+        if (i == ndm):
+            if (p1[i] != v0):
+                return False
+        else:
+            if (p1[i] != 0):
+                return False
 
     return True
 
@@ -122,8 +124,6 @@ def run_primality_test(n, is_prime):
         print(f"N={n}, IsPrimeShunia: {isprimeshunia}, Expected: {is_prime}")
     if isprimeshunia != is_prime:
         raise Exception(f"Expected IsPrimeShunia to be '{is_prime}' but found '{isprimeshunia}' for N={n}")
-
-ENABLE_LOG_ALL_RESULTS = True
 
 print("PRIMALITY TEST")
 print("By: Joseph M. Shunia, 2023")

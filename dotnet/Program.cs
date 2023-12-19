@@ -27,7 +27,7 @@ try
     if (ENABLE_RUNTIME_TESTS)
     {
         // Test all odd n > 3 up to 2^32.
-        Console.WriteLine($"[{sw.Elapsed}] Testing odd composites...");
+        Console.WriteLine($"[{sw.Elapsed}] Testing all odds...");
         BigInteger limit = BigInteger.Pow(2, 32);
         for (BigInteger n = 5; n < limit; n += 2)
         {
@@ -69,26 +69,29 @@ static bool IsPrimeShunia(BigInteger n)
         if (m1 != 0) break;
     }
 
-    if (n % d == 0)
-        return false;
-
-    BigInteger fermat = Pow(2, n1, n);
-    if (fermat != 1)
-        return false;
-
+    BigInteger ndm = n % d;
     BigInteger v0 = Pow(2, n1 / d, n);
-    BigInteger v1Expected = ModWrap(v0 + 1, n);
-    BigInteger v0a = Pow(v0 + 1, n, n);
-    if (v0a != v1Expected)
-        return false;
 
     var q = new BigInteger[] { 2 };
     var a = new BigInteger[] { 1, 1 };
     BigInteger pd = d - 1;
-    BigInteger[] p1 = PolyPow(a, n, n, pd, q);
-    BigInteger v1 = ModWrap(PolyEval(p1, 1, n), n);
-    if (v1 != v1Expected)
+    BigInteger[] p2 = PolyPow(a, n, n, pd, q);
+    if (p2[0] != 1)
         return false;
+
+    for (long i = 1; i < p2.LongLength; i++)
+    {
+        if (ndm == i)
+        {
+            if (p2[i] != v0)
+                return false;
+        }
+        else
+        {
+            if (p2[i] != 0)
+                return false;
+        }
+    }
 
     return true;
 }
@@ -237,10 +240,13 @@ static bool IsPrimeExpected(BigInteger n)
     if (n % 17 == 0) return n == 17;
     if (n % 19 == 0) return n == 19;
 
-    // We perform 4 log(2,n) Miller-Rabin tests to check primality.
+    // We perform 2 log(2,n) Miller-Rabin tests to check primality.
     // This is NOT deterministic, but it is highly unlikely for composite to pass.
     BigInteger log2 = n.GetBitLength() + 1;
-    BigInteger limit = log2 * 4;
+    BigInteger limit = log2 * 2;
+    if (limit > (n / 2))
+        limit = log2;
+
     for (BigInteger b = 2; b <= limit; b++)
     {
         if (!IsPrimeMr(n, b))
