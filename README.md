@@ -1,5 +1,5 @@
-# Shunia.Primes
-This repo contains a sample implementation and attempted proof of a primality test that I discovered. Several versions of the preprint paper regarding my test are also included. The proofs presented in the preprint are flawed. However, I have posted an updated proof which proves a key theorem. I believe the proof is sound and supports the determinism of my proposed primality test.
+# Shunia.Primes (Updated: May 2024)
+This repo contains a sample implementation and attempted proof of a primality test that I discovered. Several versions of the preprint paper regarding my test are also included. The proofs presented in the preprints are flawed. However, I have posted an updated proof which proves a key theorem. I believe the proof is sound and supports the determinism of my proposed primality test. I am currently working on a revised preprint, which I will upload soon.
 
 # Primality Test
 Let $n \in \mathbb{Z}^+$ be odd. Let $r \in \mathbb{Z}^+$ be the least odd prime such that $r \nmid n (n-1)$.
