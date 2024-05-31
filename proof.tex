@@ -102,14 +102,12 @@ f(x) \equiv (x+1)^n - x^n - 1 \equiv (x+1)^p - x^p - 1 \equiv 0 \pmod{(x^r-2, p)
 
 From this, we deduce
 \begin{align*}
-\left( (x+1)^{n/p} - x^{n/p} \right)^p \equiv 1 \pmod{(x^r-2, p)}
-\quad\Longrightarrow\quad
-(x+1)^{n/p} - x^{n/p} \equiv 1 \pmod{(x^r-2, p)} .
+\left( (x+1)^{n/p} - x^{n/p} \right)^p \equiv 1 \pmod{(x^r-2, p)} .
 \end{align*}
 
 Leading to
 \begin{align*}
-(x+1)^{n/p} - x^{n/p} \equiv (x+1)^n - x^n \equiv (x+1)^p - x^p \equiv 1 \pmod{(x^r-2, p)} .
+\left( (x+1)^{n/p} - x^{n/p} \right)^p \equiv (x+1)^n - x^n \equiv (x+1)^p - x^p \equiv 1 \pmod{(x^r-2, p)} .
 \end{align*}
 
 This also implies
@@ -123,11 +121,14 @@ where $\zeta_p$ is a $p$-th root of unity modulo $(x^r-2, p)$. By the Chinese Re
 &\equiv (x+1) - x \pmod{(x^r-2, n)} \\
 &\equiv 1 \pmod{(x^r-2, n)} .
 \end{align*}
-This is consistent with the possibility that $\zeta_p$ is a trivial $p$-th root of unity modulo $(x^r-2, n)$. That is
+This is consistent with $\zeta_p$ being a trivial $p$-th root of unity modulo $(x^r-2, n)$. That is
 \begin{align*}
 \zeta_p \equiv 1 \pmod{(x^r-2, p)} .
 \end{align*}
-
+Hence, we have
+\begin{align*}
+\left( (x+1)^{n/p} - x^{n/p} \right)^p \equiv (x+1)^{n/p} - x^{n/p} \equiv (x+1)^n - x^n \equiv (x+1)^p - x^p \equiv 1 \pmod{(x^r-2, p)} .
+\end{align*}
 Then, for each $p$, we must consider the following mutually exclusive cases:
 \begin{enumerate}
 \item[(i)] $x^p \equiv x^{n/p} \pmod{(x^r-2, p)} \quad\Longleftrightarrow\quad (x+1)^p \equiv (x+1)^{n/p} \pmod{(x^r-2, p)}$,
