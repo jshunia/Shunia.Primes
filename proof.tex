@@ -77,9 +77,37 @@ f(x) \not\equiv 0 \pmod{(x^r-2, n)}.
 \end{align*}
 \end{theorem}
 \begin{proof}
-Assume, for the sake of contradiction, that $f(x) \equiv 0 \pmod{(x^r-2, n)}$.
+The assumption $r \nmid n (n-1)$ implies that $r \nmid n$ and $r \nmid (n-1)$. First, we will show why this is necessary.
 
-Since the congruence holds mod $(x^r-2, n)$, it must also hold mod $(x^r-2, p)$ for each prime factor $p$ of $n$. Thus, for all primes $p \mid n$, we have
+Suppose $r \mid n$, therefore $r = p$ where $p \mid n$. Then
+\begin{align*}
+    x^n &\equiv 2 \pmod{(x^r-2, p)} \\
+    \Longrightarrow
+    (x+1)^n &\equiv 3 \pmod{(x^r-2, p)} .
+\end{align*}
+Hence, we have trivially
+\begin{align*}
+    (x+1)^n - x^n - 1 \equiv 0 \pmod{(x^r-2, p)}
+\end{align*}
+Next, suppose $r \mid (n-1)$. Then $r \mid (p-1)$ for some $p \mid n$, and since $p$ is prime, $(p-1) = \phi(p)$. Leading to
+\begin{align*}
+    x^n &\equiv x \pmod{(x^r-2, p)} \\
+    \Longrightarrow
+    (x+1)^n &\equiv x+1 \pmod{(x^r-2, p)} .
+\end{align*}
+Again, we have trivially
+\begin{align*}
+    (x+1)^n - x^n - 1 \equiv 0 \pmod{(x^r-2, p)} .
+\end{align*}
+
+We will finish the proof by showing $f(x) \equiv 0 \pmod{(x^r-2, n)}$ leads to a contradiction under the given conditions.
+
+Assume, for the sake of contradiction, that
+\begin{align*}
+    f(x) \equiv (x+1)^n - x^n - 1 \equiv 0 \pmod{(x^r-2, n)} .
+\end{align*}
+
+Since the congruence holds mod $(x^r-2, n)$, it must also hold mod $(x^r-2, p)$ for each prime factor $p$ of $n$. Otherwise, $n$ could not divide $f(x)$. Thus, for all primes $p \mid n$, we have
 \begin{align*}
 f(x) &\equiv (x+1)^n - x^n - 1 \equiv (x+1)^p - x^p - 1 \equiv 0 \pmod{(x^r-2, p)} \\
 \Longleftrightarrow & (x+1)^n - x^n \equiv (x+1)^p - x^p \equiv 1 \pmod{(x^r-2, p)}
@@ -87,19 +115,21 @@ f(x) &\equiv (x+1)^n - x^n - 1 \equiv (x+1)^p - x^p - 1 \equiv 0 \pmod{(x^r-2, p
 
 From this, we deduce
 \begin{align*}
-\left( (x+1)^{n/p} - x^{n/p} \right)^p \equiv 1 \pmod{(x^r-2, p)}
+\left( (x+1)^{n/p} - x^{n/p} \right)^p \equiv 1 \pmod{(x^r-2, p)} \\
+\Longrightarrow
+(x+1)^{n/p} - x^{n/p} \equiv 1 \pmod{(x^r-2, p)}
 \end{align*}
 
 Leading to
 \begin{align*}
-\left( (x+1)^{n/p} - x^{n/p} \right)^p \equiv (x+1)^n - x^n \equiv (x+1)^p - x^p \equiv 1 \pmod{(x^r-2, p)}
+(x+1)^{n/p} - x^{n/p} \equiv (x+1)^n - x^n \equiv (x+1)^p - x^p \equiv 1 \pmod{(x^r-2, p)}
 \end{align*}
 
-This implies
+This also implies
 \begin{align*}
     \zeta_p \equiv (x+1)^{n/p} - x^{n/p} \pmod{(x^r-2, p)} ,
 \end{align*}
-where $\zeta_p$ is a $p$th root of unity.
+where $\zeta_p$ is a $p$th root of unity modulo $(x^r-2, p)$.
 
 By the Chinese Remainder Theorem (CRT), since the congruences hold mod $(x^r-2, p)$ for each prime factor $p$ of $n$, they also hold mod $(x^r-2, n)$. Thus, we have
 \begin{align*}
@@ -110,22 +140,27 @@ By the Chinese Remainder Theorem (CRT), since the congruences hold mod $(x^r-2, 
 \end{align*}
 This is consistent with the possibility
 \begin{align*}
-\zeta_p \equiv (x+1)^{n/p} - x^{n/p} \equiv (x+1)^n - x^n \equiv (x+1)^p - x^p \equiv 1 \pmod{(x^r-2, p)} .
+\zeta_p \equiv 1 \pmod{(x^r-2, p)} .
 \end{align*}
 
-Then, for each $p$, we must consider the following cases:
+Then, for each $p$, we must consider the following mutually exclusive cases:
 \begin{enumerate}
-\item[(i)] $x^n \equiv x^{n/p} \pmod{(x^r-2, p)} \quad\Longleftrightarrow\quad (x+1)^{n} \equiv (x+1)^{n/p} \pmod{(x^r-2, p)}$,
-\item[(ii)] $x^p \equiv x^{n/p} \pmod{(x^r-2, p)} \quad\Longleftrightarrow\quad (x+1)^p \equiv (x+1)^{n/p} \pmod{(x^r-2, p)}$,
-\item[(iii)] $x^n \equiv x^p \pmod{(x^r-2, p)} \quad\Longleftrightarrow\quad (x+1)^n \equiv (x+1)^p \pmod{(x^r-2, p)}$.
+\item[(i)] $x^p \equiv x^{n/p} \pmod{(x^r-2, p)} \quad\Longleftrightarrow\quad (x+1)^p \equiv (x+1)^{n/p} \pmod{(x^r-2, p)}$,
+\item[(ii)] $x^n \equiv x^p \pmod{(x^r-2, p)} \quad\Longleftrightarrow\quad (x+1)^n \equiv (x+1)^p \pmod{(x^r-2, p)}$.
 \end{enumerate}
-Each case, taken individually, allows for $f(x) \equiv 0 \pmod{(x^r-2,p)}$. A prime $p$ may satisfy one or all cases, since any two cases being true implies the third.
+Each case, taken individually, allows for $f(x) \equiv 0 \pmod{(x^r-2,p)}$. These cases are mutually exclusive, since satisfying both (i) and (ii) leads to
+\begin{align*}
+    x^{n/p} \equiv x^p \equiv x^n \pmod{(x^r-2, p)} ,
+\end{align*}
+implying that $p=r$ and $r \mid n$, contradicting the theorem.
 
-For $n$, the three cases (i), (ii), (iii) collapse to a single case, since $p$ is replaced by $n$ in the exponents when lifting via the CRT:
+Now, suppose cases (i), (ii) are both false. If $x^n \equiv \zeta_p x \pmod{(x^r-2, p)}$, where $\zeta_p$ is a non-trivial $p$-th root of unity modulo $(x^r-2, p)$, then $(x+1)^n \equiv \zeta_p (x+1) \pmod{(x^r-2, p)}$. This is possible because the polynomial ring $\mathbb{Z}[x]/(x^r-2, p)$ is isomorphic to the direct product of fields $\mathbb{F}_p[x]/(x-\alpha_1) \times \cdots \times \mathbb{F}_p[x]/(x-\alpha_r)$, where the $\alpha_i$ are the roots of $x^r-2$ in an algebraic closure of $\mathbb{F}_p$. In some of these fields, there may exist non-trivial $p$-th roots of unity, allowing for this. However, we showed above that $\zeta_n \equiv 1 \pmod{(x^r-2, n)}$, so this would imply $x^n \equiv \zeta_n x \equiv x \pmod{(x^r-2, n)}$, contradicting the assumption in the theorem that $x^n \not\equiv x \pmod{(x^r-2, n)}$.
+
+Finally, suppose either case is true for all primes $p \mid n$. For $n$, the two cases (i) and (ii) collapse to a single case, since $p$ is replaced by $n$ in the exponents when lifting via the CRT:
 \begin{align*}
 x^n \equiv x \pmod{(x^r-2, n)} \quad\Longleftrightarrow\quad (x+1)^n \equiv x+1 \pmod{(x^r-2, n)}
 \end{align*}
-However, this is a contradiction, since $x^n \not\equiv x \pmod{(x^r-2, n)}$ by assumption in the theorem. Therefore $f(x) \not\equiv 0 \pmod{(x^r-2, n)}$. This completes the proof.
+However, this is a contradiction, since again, $x^n \not\equiv x \pmod{(x^r-2, n)}$ by assumption in the theorem. Therefore $f(x) \not\equiv 0 \pmod{(x^r-2, n)}$. This completes the proof.
 \end{proof}
 
 \end{document}
