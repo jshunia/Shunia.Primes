@@ -16,6 +16,7 @@ def is_prime_shunia(n):
     ilimit = max(int(gmpy2.log2(n)), 3)
     for i in range(3, ilimit+1):
         d = i
+        if is_prime_expected(d) == False: continue
         m1 = n1 % d
         if m1 != 0: break
 
@@ -41,7 +42,57 @@ def is_prime_shunia(n):
                 return False
 
     return True
+import math
 
+def is_prime_expected(n):
+    if n < 2: return False
+    if n % 2 == 0: return n == 2
+    if n % 3 == 0: return n == 3
+    if n % 5 == 0: return n == 5
+    if n % 7 == 0: return n == 7
+    if n % 11 == 0: return n == 11
+    if n % 13 == 0: return n == 13
+    if n % 17 == 0: return n == 17
+    if n % 19 == 0: return n == 19
+
+    # We perform 2 log(2,n) Miller-Rabin tests to check primality.
+    # This is NOT deterministic, but it is highly unlikely for composite to pass.
+    log2 = n.bit_length() + 1
+    limit = log2 * 2
+    if limit > (n // 2):
+        limit = log2
+
+    for b in range(2, int(limit) + 1):
+        if not is_prime_mr(n, b):
+            return False
+
+    return True
+
+def is_prime_mr(n, b):
+    if n < 2:
+        return False
+
+    n1 = n - 1
+    d, s = n1, 1
+    while d > 0 and d % 2 == 0:
+        d //= 2
+        s += 1
+
+    if d == 0:
+        return True
+
+    mp = pow(b, abs(d), n)
+    if mp == 1 or mp == n1:
+        return True
+
+    for j in range(s):
+        mp = (mp * mp) % n
+        if mp == 1:
+            return False
+        if mp == n1:
+            break
+    return mp == n1
+    
 def poly_pow(a, k, m, degree, q):
     b = [1]
     while k > 0:
