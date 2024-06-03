@@ -65,6 +65,7 @@ static bool IsPrimeShunia(BigInteger n)
     for (BigInteger i = 3; i <= ilimit; i++)
     {
         d = i;
+        if (!IsPrimeExpected(d)) continue;
         BigInteger m1 = n1 % d;
         if (m1 != 0) break;
     }
