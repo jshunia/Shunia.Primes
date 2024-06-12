@@ -60,22 +60,29 @@ static bool IsPrimeShunia(BigInteger n)
     if (n == 3) return true;
 
     BigInteger n1 = n - 1;
-    BigInteger d = 2;
-    BigInteger ilimit = BigInteger.Max(Log2(n), 3);
-    for (BigInteger i = 3; i <= ilimit; i++)
+    BigInteger r = 2;
+    BigInteger ilimit = n;
+    for (BigInteger i = 3; i <= ilimit; i+=2)
     {
-        d = i;
-        if (!IsPrimeExpected(d)) continue;
-        BigInteger m1 = n1 % d;
+        r = i;
+        if (!IsPrimeExpected(r)) continue;
+        BigInteger m1 = n1 % r;
         if (m1 != 0) break;
     }
+    
+    BigInteger r4 = r*4;
+    for (BigInteger i = 3; i < r4 && i < n; i += 2)
+    {
+        if (n % i == 0)
+            return false;
+    }
 
-    BigInteger ndm = n % d;
-    BigInteger v0 = Pow(2, n1 / d, n);
+    BigInteger ndm = n % r;
+    BigInteger v0 = Pow(2, n1 / r, n);
 
     var q = new BigInteger[] { 2 };
     var a = new BigInteger[] { 1, 1 };
-    BigInteger pd = d - 1;
+    BigInteger pd = r - 1;
     BigInteger[] p2 = PolyPow(a, n, n, pd, q);
     if (p2[0] != 1)
         return false;

@@ -12,23 +12,24 @@ def is_prime_shunia(n):
     if n == 3: return True
     
     n1 = n - 1
-    d = 2
-    ilimit = max(int(gmpy2.log2(n)), 3)
-    for i in range(3, ilimit+1):
-        d = i
-        if is_prime_expected(d) == False: continue
-        m1 = n1 % d
+    r = 2
+    ilimit = n
+    for i in range(3, ilimit+1, 2):
+        r = i
+        if is_prime_expected(r) == False: continue
+        m1 = n1 % r
         if m1 != 0: break
 
-    ndm = n % d
-    fermat = pow(2, n1, n)
-    if fermat != 1:
-        return False
+    r4 = r*4
+    for i in range(3, r4, 2):
+        if i >= n: break
+        if n % i == 0:
+            return False
         
-    v0 = pow(2, n1 // d, n)
+    v0 = pow(2, n1 // r, n)
     q = [2]
     a = [1, 1]
-    pd = d - 1
+    pd = r - 1
     p1 = poly_pow(a, n, n, pd, q)
     if p1[0] != 1:
         return False
