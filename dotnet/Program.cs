@@ -77,7 +77,7 @@ static bool IsPrimeShunia(BigInteger n)
             return false;
     }
 
-    BigInteger ndm = n % r;
+    BigInteger nrm = n % r;
     BigInteger v0 = Pow(2, n1 / r, n);
 
     var q = new BigInteger[] { 2 };
@@ -89,7 +89,7 @@ static bool IsPrimeShunia(BigInteger n)
 
     for (long i = 1; i < p2.LongLength; i++)
     {
-        if (ndm == i)
+        if (nrm == i)
         {
             if (p2[i] != v0)
                 return false;

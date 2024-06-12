@@ -34,8 +34,9 @@ def is_prime_shunia(n):
     if p1[0] != 1:
         return False
         
+    nrm = n % r
     for i in range(1, len(p1), 1):
-        if (i == ndm):
+        if (i == nrm):
             if (p1[i] != v0):
                 return False
         else:
